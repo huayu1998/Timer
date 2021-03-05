@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.AsyncTask;
 import android.content.res.Configuration;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 //import com.example.timerapp.ButtonFragment.OnFragmentInteractionListener;
@@ -40,17 +42,27 @@ public class MainActivity extends AppCompatActivity implements ButtonFragment.On
         timestampFragment = (TimeStampFragment) getSupportFragmentManager().findFragmentById(R.id.timeListFrag);
         myAsyncTask = new MyAsyncTask();
 
+
     }
 
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        //outState.putInt("count", count);
+        //outState.putInt("stamp", stampLists);
+        //outState.putBoolean("isStarted", timeStarted);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+
+        //count = savedInstanceState.getInt("count");
+        //stampLists = savedInstanceState.getInt("stamp");
+        //timeStarted = savedInstanceState.getBoolean("isStarted");
+
     }
 
 
@@ -71,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements ButtonFragment.On
                         myAsyncTask = new MyAsyncTask();
                         myAsyncTask.execute();
                     }
-
                     buttonFragment.startNstop.setText("STOP");
                     buttonFragment.startNstop.setTextColor(ContextCompat.getColor(this, R.color.white));
                 }
@@ -87,20 +98,32 @@ public class MainActivity extends AppCompatActivity implements ButtonFragment.On
 
         }
         else if (infoID == 1) {
-            stampLists = 1;
-            buttonFragment.timercount.setText("00:00:00");
-            timestampFragment.showLists.setText("");
+                stampLists = 1;
+                buttonFragment.timercount.setText("00:00:00");
+                count = 0;
+
+                if (timestampFragment != null && timestampFragment.isInLayout()) {
+                    buttonFragment.timercount.setText("00:00:00");
+                    timestampFragment.showLists.setText("");
+                    count = 0;
+                }
         }
         else if (infoID == 2) {
-            timestampFragment.showLists.append(String.valueOf(stampLists) + "." + buttonFragment.timercount.getText() + "\n");
-            stampLists++;
+            if (timestampFragment != null && timestampFragment.isInLayout()) {
+                timestampFragment.showLists.append(String.valueOf(stampLists) + "." + buttonFragment.timercount.getText() + "\n");
+                stampLists++;
+            }
         }
         else if (infoID == 3) {
+
             Intent intent = new Intent(this, ActivityList.class);
             startActivity(intent);
+
+
         }
 
     }
+
 
     private class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
 

@@ -8,7 +8,6 @@ import android.net.Uri;
 
 public class ActivityList extends AppCompatActivity {
 
-    ButtonFragment buttonFragment;
     TimeStampFragment timestampFragment;
 
     @Override
@@ -22,7 +21,6 @@ public class ActivityList extends AppCompatActivity {
              return;
         }
 
-        buttonFragment = (ButtonFragment) getSupportFragmentManager().findFragmentById(R.id.buttonFrag);
         timestampFragment = (TimeStampFragment) getSupportFragmentManager().findFragmentById(R.id.timeListFrag);
 
     }
